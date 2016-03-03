@@ -10046,6 +10046,9 @@
      * _.isInteger(3);
      * // => true
      *
+     * _.isInteger(3.5);
+     * // => false
+     *
      * _.isInteger(Number.MIN_VALUE);
      * // => false
      *
