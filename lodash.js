@@ -6675,6 +6675,10 @@
      * @param {number} [start=0] The start position.
      * @param {number} [end=array.length] The end position.
      * @returns {Array} Returns the slice of `array`.
+     * @example
+     *
+     * _.slice([1, 2, 3, 4, 5], 2, 4);
+     * // => [3, 4]
      */
     function slice(array, start, end) {
       var length = array ? array.length : 0;
