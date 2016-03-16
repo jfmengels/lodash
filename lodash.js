@@ -5722,14 +5722,8 @@
      * @returns {Array} Returns the new concatenated array.
      * @example
      *
-     * var array = [1];
-     * var other = _.concat(array, 2, [3], [[4]]);
-     *
-     * console.log(other);
+     * _.concat([1], 2, [3], [[4]]);
      * // => [1, 2, 3, [4]]
-     *
-     * console.log(array);
-     * // => [1]
      */
     var concat = rest(function(array, values) {
       if (!isArray(array)) {
