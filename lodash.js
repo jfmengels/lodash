@@ -5911,19 +5911,22 @@
      * ];
      *
      * _.dropRightWhile(users, function(o) { return !o.active; });
-     * // => objects for ['barney']
+     * // => [ { user: 'barney', active: true } ]
      *
      * // The `_.matches` iteratee shorthand.
      * _.dropRightWhile(users, { 'user': 'pebbles', 'active': false });
-     * // => objects for ['barney', 'fred']
+     * // => [ { user: 'barney', active: true },
+     * //      { user: 'fred', active: false } ]
      *
      * // The `_.matchesProperty` iteratee shorthand.
      * _.dropRightWhile(users, ['active', false]);
-     * // => objects for ['barney']
+     * // => [ { user: 'barney', active: true } ]
      *
      * // The `_.property` iteratee shorthand.
      * _.dropRightWhile(users, 'active');
-     * // => objects for ['barney', 'fred', 'pebbles']
+     * // => [ { user: 'barney', active: true },
+     * //      { user: 'fred', active: false },
+     * //      { user: 'pebbles', active: false } ]
      */
     function dropRightWhile(array, predicate) {
       return (array && array.length)
@@ -5952,19 +5955,22 @@
      * ];
      *
      * _.dropWhile(users, function(o) { return !o.active; });
-     * // => objects for ['pebbles']
+     * // => [ { user: 'pebbles', active: false } ]
      *
      * // The `_.matches` iteratee shorthand.
      * _.dropWhile(users, { 'user': 'barney', 'active': false });
-     * // => objects for ['fred', 'pebbles']
+     * // => [ { user: 'fred', active: false },
+     * //      { user: 'pebbles', active: false } ]
      *
      * // The `_.matchesProperty` iteratee shorthand.
      * _.dropWhile(users, ['active', false]);
-     * // => objects for ['pebbles']
+     * // => [ { user: 'pebbles', active: false } ]
      *
      * // The `_.property` iteratee shorthand.
      * _.dropWhile(users, 'active');
-     * // => objects for ['barney', 'fred', 'pebbles']
+     * // => [ { user: 'barney', active: true },
+     * //      { user: 'fred', active: false },
+     * //      { user: 'pebbles', active: false } ]
      */
     function dropWhile(array, predicate) {
       return (array && array.length)
@@ -6989,15 +6995,17 @@
      * ];
      *
      * _.takeRightWhile(users, function(o) { return !o.active; });
-     * // => objects for ['fred', 'pebbles']
+     * // => [ { user: 'fred', active: false },
+     * //      { user: 'pebbles', active: false } ]
      *
      * // The `_.matches` iteratee shorthand.
      * _.takeRightWhile(users, { 'user': 'pebbles', 'active': false });
-     * // => objects for ['pebbles']
+     * // => [ { user: 'pebbles', active: false } ]
      *
      * // The `_.matchesProperty` iteratee shorthand.
      * _.takeRightWhile(users, ['active', false]);
-     * // => objects for ['fred', 'pebbles']
+     * // => [ { user: 'fred', active: false },
+     * //      { user: 'pebbles', active: false } ]
      *
      * // The `_.property` iteratee shorthand.
      * _.takeRightWhile(users, 'active');
@@ -7030,15 +7038,17 @@
      * ];
      *
      * _.takeWhile(users, function(o) { return !o.active; });
-     * // => objects for ['barney', 'fred']
+     * // => [ { user: 'barney', active: true },
+     * //		   { user: 'fred', active: false } ]
      *
      * // The `_.matches` iteratee shorthand.
      * _.takeWhile(users, { 'user': 'barney', 'active': false });
-     * // => objects for ['barney']
+     * // => [ { user: 'barney', active: true } ]
      *
      * // The `_.matchesProperty` iteratee shorthand.
      * _.takeWhile(users, ['active', false]);
-     * // => objects for ['barney', 'fred']
+     * // => [ { user: 'barney', active: true },
+     * //      { user: 'fred', active: false } ]
      *
      * // The `_.property` iteratee shorthand.
      * _.takeWhile(users, 'active');
@@ -7896,19 +7906,19 @@
      * ];
      *
      * _.filter(users, function(o) { return !o.active; });
-     * // => objects for ['fred']
+     * // => [ { 'user': 'fred',   'age': 40, 'active': false } ]
      *
      * // The `_.matches` iteratee shorthand.
      * _.filter(users, { 'age': 36, 'active': true });
-     * // => objects for ['barney']
+     * // => [ { 'user': 'barney', 'age': 36, 'active': true } ]
      *
      * // The `_.matchesProperty` iteratee shorthand.
      * _.filter(users, ['active', false]);
-     * // => objects for ['fred']
+     * // => [ { 'user': 'fred',   'age': 40, 'active': false } ]
      *
      * // The `_.property` iteratee shorthand.
      * _.filter(users, 'active');
-     * // => objects for ['barney']
+     * // => [ { 'user': 'barney', 'age': 36, 'active': true } ]
      */
     function filter(collection, predicate) {
       var func = isArray(collection) ? arrayFilter : baseFilter;
@@ -7937,10 +7947,12 @@
      *
      * _.find(users, function(o) { return o.age < 40; });
      * // => object for 'barney'
+     * // => [ { user: 'fred', active: false } ]
      *
      * // The `_.matches` iteratee shorthand.
      * _.find(users, { 'age': 1, 'active': true });
      * // => object for 'pebbles'
+     * // => [ { user: 'fred', active: false } ]
      *
      * // The `_.matchesProperty` iteratee shorthand.
      * _.find(users, ['active', false]);
@@ -7949,6 +7961,7 @@
      * // The `_.property` iteratee shorthand.
      * _.find(users, 'active');
      * // => object for 'barney'
+     * // => [ { user: 'fred', active: false } ]
      */
     function find(collection, predicate) {
       predicate = getIteratee(predicate, 3);
@@ -8335,6 +8348,12 @@
      * // Sort by `user` in ascending order and by `age` in descending order.
      * _.orderBy(users, ['user', 'age'], ['asc', 'desc']);
      * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 42]]
+     * // => [
+     * //   { 'user': 'barney', 'age': 36 },
+     * //   { 'user': 'barney', 'age': 34 },
+     * //   { 'user': 'fred',   'age': 48 },
+     * //   { 'user': 'fred',   'age': 42 }
+     * // ]
      */
     function orderBy(collection, iteratees, orders, guard) {
       if (collection == null) {
@@ -8372,19 +8391,35 @@
      * ];
      *
      * _.partition(users, function(o) { return o.active; });
-     * // => objects for [['fred'], ['barney', 'pebbles']]
+     * // => [
+     * //   [ { 'user': 'fred',    'age': 40, 'active': true } ],
+     * //   [ { 'user': 'barney',  'age': 36, 'active': false },
+     * //     { 'user': 'pebbles', 'age': 1,  'active': false } ]
+     * // ]
      *
      * // The `_.matches` iteratee shorthand.
      * _.partition(users, { 'age': 1, 'active': false });
-     * // => objects for [['pebbles'], ['barney', 'fred']]
+     * // => [
+     * //   [ { 'user': 'pebbles', 'age': 1,  'active': false } ],
+     * //   [ { 'user': 'barney',  'age': 36, 'active': false },
+     * //     { 'user': 'fred',    'age': 40, 'active': true } ]
+     * // ]
      *
      * // The `_.matchesProperty` iteratee shorthand.
      * _.partition(users, ['active', false]);
-     * // => objects for [['barney', 'pebbles'], ['fred']]
+     * // => [
+     * //   [ { 'user': 'barney',  'age': 36, 'active': false },
+     * //     { 'user': 'pebbles', 'age': 1,  'active': false } ],
+     * //   [ { 'user': 'fred',    'age': 40, 'active': true } ]
+     * // ]
      *
      * // The `_.property` iteratee shorthand.
      * _.partition(users, 'active');
-     * // => objects for [['fred'], ['barney', 'pebbles']]
+     * // => [
+     * //   [ { 'user': 'fred',    'age': 40, 'active': true } ],
+     * //   [ { 'user': 'barney',  'age': 36, 'active': false },
+     * //     { 'user': 'pebbles', 'age': 1,  'active': false } ]
+     * // ]
      */
     var partition = createAggregator(function(result, value, key) {
       result[key ? 0 : 1].push(value);
@@ -8684,15 +8719,31 @@
      * ];
      *
      * _.sortBy(users, function(o) { return o.user; });
-     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 42]]
+     * // => [
+     *   { 'user': 'barney', 'age': 36 },
+     *   { 'user': 'barney', 'age': 34 },
+     *   { 'user': 'fred',   'age': 48 },
+     *   { 'user': 'fred',   'age': 42 }
+     * ];
      *
      * _.sortBy(users, ['user', 'age']);
-     * // => objects for [['barney', 34], ['barney', 36], ['fred', 42], ['fred', 48]]
+     * // => [
+     *   { 'user': 'barney', 'age': 34 },
+     *   { 'user': 'barney', 'age': 36 },
+     *   { 'user': 'fred',   'age': 42 },
+     *   { 'user': 'fred',   'age': 48 }
+     * ];
+     * objects for [['barney', 34], ['barney', 36], ['fred', 42], ['fred', 48]]
      *
      * _.sortBy(users, 'user', function(o) {
      *   return Math.floor(o.age / 10);
      * });
-     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 42]]
+     * // => [
+     *   { 'user': 'barney', 'age': 36 },
+     *   { 'user': 'barney', 'age': 34 },
+     *   { 'user': 'fred',   'age': 48 },
+     *   { 'user': 'fred',   'age': 42 }
+     * ];
      */
     var sortBy = rest(function(collection, iteratees) {
       if (collection == null) {
